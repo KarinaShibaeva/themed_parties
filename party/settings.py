@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'events',
     'embed_video',
+    'appeal',
 ]
 
 MIDDLEWARE = [
