@@ -35,4 +35,4 @@ def confirm_registration(request, user_id):
     user.is_active = True
     user.save()
 
-    return render(request, 'confirmation.html')
+    return render(request, 'register/confirmation.html')
