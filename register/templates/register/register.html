@@ -6,11 +6,11 @@
     <title>Register</title>
 </head>
 <body>
-    <h2>Register</h2>
+    <h1>Registration</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Register</button>
+        <input type="submit" value="Register">
     </form>
 </body>
 </html>

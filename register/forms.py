@@ -1,7 +1,7 @@
 from django import forms
-from .models import CustomUser
+from .models import User
 
-class RegistrationForm(forms.ModelForm):
+class UserRegistrationForm(forms.ModelForm):
     class Meta:
-        model = CustomUser
-        fields = ['username', 'email', 'password']
+        model = User
+        fields = ['name', 'email', 'password']
