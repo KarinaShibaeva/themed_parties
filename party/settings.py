@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'events',
     'embed_video',
     'appeal',
+    'register',
 ]
 
 MIDDLEWARE = [
