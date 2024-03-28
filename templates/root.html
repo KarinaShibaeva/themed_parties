@@ -10,23 +10,23 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-body-light" style="background-color: #e3f2fd;">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">ThemePartyCentral</a>
+    <a class="navbar-brand" href="{% url 'siteinfo:main' %}">ThemePartyCentral</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active text-black" aria-current="page" href="#">Главная</a>
+          <a class="nav-link active text-black" aria-current="page" href="{% url 'siteinfo:main' %}">Главная</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-black" href="#">Мероприятия</a>
+          <a class="nav-link text-black" href="{% url 'events:events' %}">Мероприятия</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-black" href="#">Забронировать место</a>
+          <a class="nav-link text-black" href="{% url 'appeal:appeals' %}">Забронировать место</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-black" href="#">Вход</a>
+          <a class="nav-link text-black" href="{% url 'register:register' %}">Вход</a>
         </li>
       </ul>
     </div>
