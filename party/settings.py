@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'embed_video',
     'appeal',
     'register',
+    'siteinfo',
 ]
 
 MIDDLEWARE = [

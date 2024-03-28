@@ -1,0 +1,18 @@
+body{
+    font-family: 'Century Gothic';
+}
+.main-block1{
+    background-image: url(/media/fon.png);
+    background-size: cover;
+    height: 100vh;
+}
+.main-block1-btn{
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    font-size: 30px;
+    border-radius: 0;
+}
+.main-block1-title{
+    color: #ffffff;
+    font-size: 70px;
+}

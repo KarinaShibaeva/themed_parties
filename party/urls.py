@@ -23,6 +23,7 @@ urlpatterns = [
     path('events/', include('events.urls', namespace='events')),
     path('appeal/', include('appeal.urls', namespace='appeal')),
     path('register/', include('register.urls', namespace='register')),
+    path('about/', include('siteinfo.urls', namespace='siteinfo'))
 ]
 
 if settings.DEBUG:
