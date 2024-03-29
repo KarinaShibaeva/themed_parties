@@ -1,6 +1,6 @@
 {% extends 'root.html' %}
 {% block content %}
-
+<h1>{{ events.title }}</h1>
 <form method="post" class="mt-5 ms-5" enctype="multipart/form-data">
     {% csrf_token %}
         {{ form.as_p }}

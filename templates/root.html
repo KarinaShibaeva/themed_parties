@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Г</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
@@ -23,7 +23,7 @@
           <a class="nav-link text-black" href="{% url 'events:events' %}">Мероприятия</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-black" href="{% url 'appeal:appeals' %}">Забронировать место</a>
+          <a class="nav-link text-black" href="#">Забронировать место</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-black" href="{% url 'register:register' %}">Вход</a>

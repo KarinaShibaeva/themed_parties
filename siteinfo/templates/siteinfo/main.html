@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Главная</title>
+    <title>{% block title %}Главная{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
@@ -12,7 +12,7 @@
 <div class="main-block1 d-flex flex-column align-items-center justify-content-center">
         <h1 class="main-block1-title text-light">ThemePartyCentral</h1>
         <p class="main-block1-text text-light">Создаем уникальные мероприятия вместе с вами</p>
-        <a href="{% url 'appeal:appeals' %}"><button class="btn main-block1-btn">Забронировать место</button></a>
+        <a href="#"><button class="btn main-block1-btn">Забронировать место</button></a>
     </div>
 {% endblock %}
 </body>

@@ -5,5 +5,5 @@ from appeal.views import submit_appeal
 app_name = 'appeal'
 
 urlpatterns = [
-    path('', submit_appeal, name='appeals')
+    path('<int:event_id>/appeal', submit_appeal, name='appeals')
 ]

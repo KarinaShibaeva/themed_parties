@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
+from django.urls import reverse
+from django.utils.crypto import get_random_string
+
 from .forms import UserRegistrationForm
 from .models import User
 
@@ -13,26 +16,29 @@ def register_user(request):
             user.is_active = False
             user.save()
 
-            # Отправка письма с ссылкой для подтверждения регистрации
+            token = get_random_string(32)
+            user.activation_token = token
+            user.save()
+
             send_mail(
-                'Подтверждение регистрации',
-                'Пожалуйста, перейдите по ссылке для подтверждения регистрации: http://yourwebsite.com/confirm/{0}'.format(
-                    user.id),
-                settings.EMAIL_HOST_USER,
-                [user.email],
-                fail_silently=False,
+                'Activate your account',
+                f'Click the link to activate your account: http://{request.get_host()}{reverse("activate, args=[token])}',
+                'from@example.com',
+                [email],
             )
 
-            return redirect('confirmation_sent')
+            return render(request, 'register/confirmation.html')
     else:
         form = UserRegistrationForm()
 
     return render(request, 'register/register.html', {'form': form})
 
 
-def confirm_registration(request, user_id):
-    user = User.objects.get(id=user_id)
+def activate(request, token):
+    user_profile = User.objects.get(activation_token=token)
+    user = user_profile.user
     user.is_active = True
     user.save()
 
     return render(request, 'register/confirmation.html')
+
