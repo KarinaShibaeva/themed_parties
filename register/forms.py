@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.crypto import get_random_string
+
 from .models import CustomUser
 
 class UserRegistrationForm(UserCreationForm):
@@ -19,4 +21,13 @@ class UserRegistrationForm(UserCreationForm):
         if password and password2 and password != password2:
             raise forms.ValidationError("Пароли не совпадают")
         return password2
+
+    def send_confirmation_email(self):
+        user = self.save(commit=False)
+        user.confirmation_code = get_random_string(length=20)
+        user.save()
+
+        subject = 'Подтверждение аккаунта'
+        message = f'Для подтверждения аккаунта перейдите по ссылке: http://yourwebsite.com/confirm/{user.confirmation_code}'
+        user.email_user(subject, message)
 

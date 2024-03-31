@@ -10,4 +10,6 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128, verbose_name='Пароль')
     account_type = models.CharField(max_length=1, choices=USER_TYPE_CHOICES, default='P', verbose_name='Тип аккаунта')
+    email_verified = models.BooleanField(default=False)
+    confirmation_code = models.CharField(max_length=20, blank=True, null=True)
 

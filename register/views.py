@@ -1,24 +1,21 @@
 from django.shortcuts import render, redirect
-from django.core.mail import send_mail
-from django.conf import settings
 from .forms import UserRegistrationForm
+from .models import CustomUser
+
 
 def register_user(request):
-    form = UserRegistrationForm(request.POST or None)
-    if request.method == 'POST' and form.is_valid():
-        user = form.save(commit=False)
-        password = form.cleaned_data['password1']
-        user.set_password(password)
-        user.save()
-
-        # Отправка приветственного письма
-        subject = 'Добро пожаловать!'
-        message = f'Привет, {user.username}! Спасибо за регистрацию на нашем сайте.'
-        sender = settings.EMAIL_HOST_USER
-        recipient = [user.email]
-
-        send_mail(subject, message, sender, recipient, fail_silently=False)
-
-        return redirect('registration_success')
-
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.send_confirmation_email()
+            return redirect('registration_success')
+    else:
+        form = UserRegistrationForm()
     return render(request, 'register/register.html', {'form': form})
+
+def confirm_account(request, confirmation_code):
+    user = CustomUser.objects.get(confirmation_code=confirmation_code)
+    user.email_verified = True
+    user.confirmation_code = ''
+    user.save()
+    return render(request, 'register/confirm_account.html')
