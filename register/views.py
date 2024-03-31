@@ -1,44 +1,45 @@
-from django.shortcuts import render, redirect
+import uuid
+
 from django.core.mail import send_mail
-from django.conf import settings
-from django.urls import reverse
-from django.utils.crypto import get_random_string
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.views import View
 
-from .forms import UserRegistrationForm
-from .models import User
+from register.forms import UserRegistrationForm
+from register.models import EmailConfirmation
 
 
-def register_user(request):
-    if request.method == 'POST':
+class RegisterUserView(View):
+    def post(self, request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False
+            user.set_password(form.cleaned_data['password'])
             user.save()
 
-            token = get_random_string(32)
-            user.activation_token = token
+            email_confirmation = EmailConfirmation(user=user)
+            email_confirmation.save()
+
+            token = urlsafe_base64_encode(force_bytes(email_confirmation.token))
+            confirmation_url = f'http://yourwebsite.com/confirm_email/{token}/'
+            subject = 'Подтверждение регистрации'
+            message = render_to_string('register/confirmation.html', {'confirmation_url': confirmation_url})
+            send_mail(subject, message, 'noreply@yourwebsite.com', [user.email])
+
+            return HttpResponse('Пожалуйста, проверьте вашу почту для подтверждения регистрации.')
+        return HttpResponseBadRequest('Invalid form data')
+
+class ConfirmEmailView(View):
+    def get(self, request, token):
+        try:
+            token = uuid.UUID(urlsafe_base64_decode(token))
+            confirmation = EmailConfirmation.objects.get(token=token)
+            user = confirmation.user
+            user.is_active = True
             user.save()
-
-            send_mail(
-                'Activate your account',
-                f'Click the link to activate your account: http://{request.get_host()}{reverse("activate, args=[token])}',
-                'from@example.com',
-                [email],
-            )
-
-            return render(request, 'register/confirmation.html')
-    else:
-        form = UserRegistrationForm()
-
-    return render(request, 'register/register.html', {'form': form})
-
-
-def activate(request, token):
-    user_profile = User.objects.get(activation_token=token)
-    user = user_profile.user
-    user.is_active = True
-    user.save()
-
-    return render(request, 'register/confirmation.html')
-
+            confirmation.delete()
+            return HttpResponse('Ваш аккаунт успешно подтвержден.')
+        except EmailConfirmation.DoesNotExist:
+            return HttpResponseBadRequest('Invalid confirmation link.')

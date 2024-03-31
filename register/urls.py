@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import register_user, activate
+from .views import RegisterUserView, ConfirmEmailView
 
 app_name = 'register'
 
 urlpatterns = [
-    path('register/', register_user, name='register'),
-    path('activate/<str:token>/', activate, name='activate'),
+    path('register/', RegisterUserView.as_view(), name='register'),
+    path('activate/<str:token>/', ConfirmEmailView.as_view(), name='activate'),
 ]

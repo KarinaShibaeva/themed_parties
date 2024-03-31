@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'events',
     'embed_video',
-    'appeal',
     'register',
     'siteinfo',
 ]
@@ -139,3 +138,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your-email@example.com'
 EMAIL_HOST_PASSWORD = 'your-email-password'
+
+AUTH_USER_MODEL = "register.User"
