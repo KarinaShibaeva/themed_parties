@@ -1,5 +1,6 @@
 from django.db import models
-from embed_video.fields import EmbedVideoField
+
+from register.models import CustomUser
 
 
 class Topic(models.Model):
@@ -26,4 +27,15 @@ class Events(models.Model):
     class Meta:
         verbose_name = 'Мероприятие'
         verbose_name_plural = 'Мероприятия'
+
+
+class Booking(models.Model):
+    event = models.ForeignKey(Events, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    price = models.ForeignKey(Events, on_delete=models.CASCADE)
+    number_of_people = models.IntegerField()
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
+
+    def __str__(self):
+        return f'{self.user.name} - {self.event.name}'
 
