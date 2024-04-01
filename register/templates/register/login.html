@@ -1,0 +1,28 @@
+{% extends 'root.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<h1>Авторизация</h1>
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Логин:</label>
+        <input type="text" id="username" name="username">
+        <br>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password">
+        <br>
+        <input type="submit" value="Войти">
+    </form>
+{% endblock %}
+</body>
+</html>

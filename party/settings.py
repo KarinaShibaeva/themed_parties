@@ -144,3 +144,5 @@ DEFAULT_FROM_EMAIL = 'your_email@example.com'
 AUTH_USER_MODEL = "register.CustomUser"
 
 db_table = 'custom_user'
+
+AUTH_PROFILE_MODULE = 'register.UserProfile'

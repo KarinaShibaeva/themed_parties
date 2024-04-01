@@ -1,3 +1,4 @@
+{% extends 'root.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,9 @@
     <title>Title</title>
 </head>
 <body>
+{% block content %}
 <h1>Подтверждение регистрации</h1>
     <p>На вашу электронную почту отправлено письмо для подтверждения аккаунта. Перейдите по ссылке в письме, чтобы завершить регистрацию.</p>
+{% endblock %}
 </body>
 </html>
