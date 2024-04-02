@@ -19,11 +19,13 @@ def book_event(request, event_id):
     if request.method == 'POST':
         event = Events.objects.get(id=event_id)
         booking = Booking(event=event, user=request.user)
-        booking.total_price = booking.number_of_people * booking.price
+        booking.total_price = booking.get_total_price()
         booking.save()
-        return redirect('booking_success')
-    else:
-        return redirect('event_id_view', event_id=event_id)
+        return redirect('events:success')
+    return render(request, 'evetns/booking.html', {'event_id': event_id})
 
 def booking_success(request):
     return render(request, 'evetns/booking_success.html')
+
+def booking(request):
+    return render(request, 'evetns/booking.html')
