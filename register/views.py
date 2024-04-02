@@ -1,5 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm
 from .models import CustomUser, UserProfile
@@ -12,6 +14,10 @@ def register_user(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
+            user = form.save(commit=False)
+            user.save(force_insert=True)  # Сохраняем CustomUser сразу в базу данных
+
+            UserProfile.objects.create(user=user)
             form.send_confirmation_email()
             return redirect('register:registration_success')
     else:
@@ -24,6 +30,13 @@ def confirm_account(request, confirmation_code):
     user.confirmation_code = ''
     user.save()
     return render(request, 'register/confirm_account.html')
+
+@receiver(post_save, sender=CustomUser)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+    else:
+        instance.profile.save()
 
 def login_user(request):
     if request.method == 'POST':
