@@ -10,15 +10,17 @@ from .models import CustomUser, UserProfile
 def registration_success(request):
     return render(request, 'register/registration_success.html')
 
+
 def register_user(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.save(force_insert=True)  # Сохраняем CustomUser сразу в базу данных
+            user.save()
 
-            UserProfile.objects.create(user=user)
+            user_profile = UserProfile.objects.create(user=user)
             form.send_confirmation_email()
+
             return redirect('register:registration_success')
     else:
         form = UserRegistrationForm()
@@ -31,12 +33,7 @@ def confirm_account(request, confirmation_code):
     user.save()
     return render(request, 'register/confirm_account.html')
 
-@receiver(post_save, sender=CustomUser)
-def create_or_update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-    else:
-        instance.profile.save()
+
 
 def login_user(request):
     if request.method == 'POST':

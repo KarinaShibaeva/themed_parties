@@ -12,12 +12,15 @@ class CustomUser(AbstractUser):
     email_verified = models.BooleanField(default=False)
     confirmation_code = models.CharField(max_length=20, blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        if not hasattr(self, 'profile'):
-            UserProfile.objects.create(user=self)
-        super().save(*args, **kwargs)
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if len(UserProfile.objects.filter(user=self)) == 0:
+            UserProfile.objects.create(user=self)
+
 
 
