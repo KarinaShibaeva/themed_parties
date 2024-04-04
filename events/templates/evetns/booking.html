@@ -7,7 +7,7 @@
 </head>
 <body>
 {% block content %}
-     <h1>Бронирование мероприятия: {{ event.title }}</h1>
+     <h1>Бронирование мероприятия: {{ events.title }}</h1>
     <form method="post">
         {% csrf_token %}
 

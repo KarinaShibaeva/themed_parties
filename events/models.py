@@ -36,7 +36,7 @@ class Booking(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
 
     def get_total_price(self, *args, **kwargs):
-        self.total_price = self.events.price * self.number_of_people
+        self.total_price = self.event.price * self.number_of_people
         super(Booking, self).save(*args, **kwargs)
 
     def __str__(self):

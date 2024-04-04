@@ -17,7 +17,7 @@
                     <p class="block1-text w-50"><b>Стоимость: </b>{{ pk.price }}&#8381 </p>
                     <p class="block1-text w-50"><b>Место проведения: </b>{{ pk.place }}</p>
                     <p class="block1-text w-50"><b>Количество мест: </b>{{ pk.seats }}</p>
-                    <a href="{% url 'events:booking' pk.event_pk %}"><button class="block1-btn">Забронировать место</button></a>
+                    <a href="{% url 'events:booking' events.pk %}"><button class="block1-btn">Забронировать место</button></a>
                 </div>
                 <img src="{{ pk.image.url }}" class="w-25">
             </div>
