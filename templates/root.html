@@ -25,6 +25,15 @@
         <li class="nav-item">
           <a class="nav-link text-black" href="{% url 'register:register' %}">Зарегистрироваться</a>
         </li>
+          {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link text-black" href="{% url 'auth:logout' %}">Выход</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link text-black" href="{% url 'auth:login' %}">Вход</a>
+              </li>
+          {% endif %}
       </ul>
     </div>
   </div>

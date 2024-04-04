@@ -18,7 +18,6 @@ def register_user(request):
             user = form.save(commit=False)
             user.save()
 
-            user_profile = UserProfile.objects.create(user=user)
             form.send_confirmation_email()
 
             return redirect('register:registration_success')
@@ -55,4 +54,4 @@ def profile(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('home')
+    return redirect('siteinfo:main')
