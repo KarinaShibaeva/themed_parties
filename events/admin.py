@@ -14,4 +14,4 @@ class TopicAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ['event', 'user', 'total_price']
+    list_display = ['event', 'user', 'number_of_people', 'total_price']

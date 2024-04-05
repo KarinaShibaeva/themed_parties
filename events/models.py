@@ -28,12 +28,19 @@ class Events(models.Model):
         verbose_name = 'Мероприятие'
         verbose_name_plural = 'Мероприятия'
 
+    def __str__(self):
+        return self.name
+
 
 class Booking(models.Model):
     event = models.ForeignKey(Events, on_delete=models.CASCADE)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     number_of_people = models.IntegerField()
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        verbose_name = 'Бронирование'
+        verbose_name_plural = 'Бронирования'
 
     def get_total_price(self, *args, **kwargs):
         self.total_price = self.event.price * self.number_of_people

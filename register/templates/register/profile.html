@@ -7,8 +7,20 @@
 </head>
 <body>
 {% block content %}
-    <h1>Личный кабинет пользователя</h1>
-<h2>{{ user_profile.name }}</h2>
+    <h1>Личный кабинет пользователя: {{ user_profile.user }}</h1>
+    {% if user_booking %}
+    <ul>
+        {% for booking in user_booking %}
+            <li>{{ booking.event }} - {{ booking.total_price }}</li>
+            <form action="{% url 'auth:delete_booking' booking.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Удалить</button>
+            </form>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>У вас нет забронированных мероприятий</p>
+{% endif %}
 {% endblock %}
 </body>
 </html>

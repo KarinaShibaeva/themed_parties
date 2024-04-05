@@ -2,7 +2,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+
+from events.models import Booking
 from .forms import UserRegistrationForm
 from .models import CustomUser, UserProfile
 
@@ -50,7 +52,13 @@ def login_user(request):
 @login_required
 def profile(request):
     user_profile = UserProfile.objects.get(user=request.user)  # Получаем профиль текущего пользователя
-    return render(request, 'register/profile.html', {'user_profile': user_profile})
+    user_booking = Booking.objects.filter(user=request.user)
+    return render(request, 'register/profile.html', {'user_profile': user_profile, 'user_booking': user_booking})
+
+def delete_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+    booking.delete()
+    return redirect('auth:profile')
 
 def logout_user(request):
     logout(request)

@@ -7,12 +7,12 @@
 </head>
 <body>
 {% block content %}
-     <h1>Бронирование мероприятия: {{ events.title }}</h1>
+     <h1>Бронирование мероприятия: {{ events.name }}</h1>
     <form method="post">
         {% csrf_token %}
 
         {{ form.as_p }}
-
+        {{ booking.total_price }}
         <button type="submit">Забронировать</button>
     </form>
 {% endblock %}

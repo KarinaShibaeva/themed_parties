@@ -12,24 +12,24 @@ class EventsListView(ListView):
 
 def event_id_view(requset, pk):
     pk = get_object_or_404(Events, pk=pk)
-    context = {"pk":pk, 'page':'events'}
+    context = {'pk':pk, 'page':'events'}
     return render(requset, "evetns/events_detail.html", context)
 
 
 def book_event(request, pk):
     event = Events.objects.get(pk=pk)
-
     if request.method == 'POST':
         form = AppealForm(request.POST)
         if form.is_valid():
-            ticket = form.save(commit=False)
-            ticket.event = event
-            ticket.total_price = ticket.get_total_price()
-            ticket.save()
-            return render(request, 'evetns/booking_success.html')
+            number_of_people = form.cleaned_data['number_of_people']
+            total_price = event.price * number_of_people
+            booking = Booking(event=event, number_of_people=number_of_people, total_price=total_price)
+            booking.save()
+            return redirect('events:event_detail', pk=pk)
     else:
         form = AppealForm()
-    return render(request, 'evetns/booking.html', {'form': form, 'event': event})
+
+    return render(request, 'evetns/booking.html', {'event': event, 'form': form})
 
 def booking_success(request):
     return render(request, 'evetns/booking_success.html')
