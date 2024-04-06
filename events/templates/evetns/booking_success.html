@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1>Спасибо за вашу бронь!</h1>
-<p><p>Your total price is ${{ booking.total_price }}</p></p>
+<p>Your total price is ${{ booking.total_price }}</p>
+<a href="{% url 'auth:profile' %}"><button>В личный кабинет</button></a>
 </body>
 </html>

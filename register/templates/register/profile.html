@@ -11,7 +11,8 @@
     {% if user_booking %}
     <ul>
         {% for booking in user_booking %}
-            <li>{{ booking.event }} - {{ booking.total_price }}</li>
+            <li>Мероприятие: {{ booking.event }}</li>
+            <li>За {{ booking.number_of_people }} человек(а): {{ booking.total_price }} ₽</li>
             <form action="{% url 'auth:delete_booking' booking.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger">Удалить</button>

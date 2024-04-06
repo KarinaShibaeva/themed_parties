@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.crypto import get_random_string
 
-from .models import CustomUser
+from .models import CustomUser, UserProfile
+
 
 class UserRegistrationForm(UserCreationForm):
     password2 = forms.CharField(label='Подтвердите пароль', widget=forms.PasswordInput)
@@ -30,4 +31,5 @@ class UserRegistrationForm(UserCreationForm):
         subject = 'Подтверждение аккаунта'
         message = f'Для подтверждения аккаунта перейдите по ссылке: http://yourwebsite.com/confirm/{user.confirmation_code}'
         user.email_user(subject, message)
+
 

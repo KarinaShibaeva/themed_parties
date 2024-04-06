@@ -35,7 +35,7 @@ class Events(models.Model):
 class Booking(models.Model):
     event = models.ForeignKey(Events, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
-    number_of_people = models.IntegerField()
+    number_of_people = models.IntegerField(verbose_name='Количество человек')
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:

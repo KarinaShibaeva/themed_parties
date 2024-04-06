@@ -7,7 +7,7 @@
 </head>
 <body>
 {% block content %}
-     <h1>Бронирование мероприятия: {{ events.name }}</h1>
+     <h1>Бронирование места на: {{ event.name }}</h1>
     <form method="post">
         {% csrf_token %}
 
@@ -15,6 +15,10 @@
         {{ booking.total_price }}
         <button type="submit">Забронировать</button>
     </form>
+    {% if number_of_people %}
+        <p>Number of people: {{ number_of_people }}</p>
+        <p>Booking Cost: ${{ total_price }}</p>
+    {% endif %}
 {% endblock %}
 </body>
 </html>
