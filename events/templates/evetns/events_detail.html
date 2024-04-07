@@ -23,6 +23,16 @@
             </div>
         </div>
     </div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+<!-- Вывод комментариев -->
+    {% for comment in comments %}
+        <p>{{ comment.text }}</p>
+    {% endfor %}
 {% endblock %}
 </body>
 </html>

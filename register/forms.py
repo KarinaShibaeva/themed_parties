@@ -10,7 +10,7 @@ class UserRegistrationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'password2', 'account_type']
+        fields = ['username', 'email', 'password1', 'password2', 'account_type']
         widgets = {
             'password': forms.PasswordInput(),
             'password2': forms.PasswordInput(),

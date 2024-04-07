@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from events.models import Events, Topic, Booking
+from events.models import Events, Topic, Booking, Comment
 
 
 @admin.register(Events)
@@ -15,3 +15,7 @@ class TopicAdmin(admin.ModelAdmin):
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = ['event', 'user', 'number_of_people', 'total_price']
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['user', 'text']

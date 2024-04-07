@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'embed_video',
     'register',
     'siteinfo',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'party.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates")],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -146,3 +147,5 @@ AUTH_USER_MODEL = "register.CustomUser"
 db_table = 'custom_user'
 
 AUTH_PROFILE_MODULE = 'register.UserProfile'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

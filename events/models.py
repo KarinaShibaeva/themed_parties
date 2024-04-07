@@ -49,3 +49,9 @@ class Booking(models.Model):
     def __str__(self):
         return f'{self.user.name} - {self.event.name}'
 
+class Comment(models.Model):
+    event = models.ForeignKey(Events, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+

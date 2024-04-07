@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 
-from events.forms import AppealForm
+from events.forms import AppealForm, CommentForm
 from events.models import Events, Booking
 
 
@@ -10,10 +10,19 @@ class EventsListView(ListView):
     context_object_name = 'events'
     template_name = 'evetns/events_list.html'
 
-def event_id_view(requset, pk):
+def event_id_view(request, pk):
     pk = get_object_or_404(Events, pk=pk)
-    context = {'pk':pk, 'page':'events'}
-    return render(requset, "evetns/events_detail.html", context)
+    comments = pk.comment_set.all()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.pk = pk  # изменено с pk на event
+            new_comment.save()
+    else:
+        form = CommentForm()
+
+    return render(request, 'evetns/events_detail.html', {'pk': pk, 'comments': comments, 'form': form})
 
 
 def book_event(request, pk):
