@@ -11,18 +11,22 @@ class EventsListView(ListView):
     template_name = 'evetns/events_list.html'
 
 def event_id_view(request, pk):
-    pk = get_object_or_404(Events, pk=pk)
-    comments = pk.comment_set.all()
+    event = get_object_or_404(Events, pk=pk)
+    comments = event.comment_set.all()
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             new_comment = form.save(commit=False)
-            new_comment.pk = pk  # изменено с pk на event
+            new_comment.user = request.user
+            new_comment.event = event  # изменено с pk на event
             new_comment.save()
+            form = CommentForm()
     else:
         form = CommentForm()
 
-    return render(request, 'evetns/events_detail.html', {'pk': pk, 'comments': comments, 'form': form})
+    return render(request, 'evetns/events_detail.html', {'pk': event, 'comments': comments, 'form': form})
+
+
 
 
 def book_event(request, pk):

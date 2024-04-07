@@ -23,6 +23,10 @@
             </div>
         </div>
     </div>
+    {% for comment in comments %}
+        <p>{{ comment.user }}</p>
+        <p>{{ comment.text }}</p>
+    {% endfor %}
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
@@ -30,9 +34,7 @@
     </form>
 
 <!-- Вывод комментариев -->
-    {% for comment in comments %}
-        <p>{{ comment.text }}</p>
-    {% endfor %}
+
 {% endblock %}
 </body>
 </html>
