@@ -7,7 +7,7 @@ from register.models import UserProfile
 class AppealForm(forms.ModelForm):
     class Meta:
         model = Booking
-        exclude = ['event', 'total_price', 'user']
+        exclude = ['event', 'total_price', 'user', 'status']
 
 
 class CommentForm(forms.ModelForm):

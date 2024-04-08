@@ -7,13 +7,13 @@
 </head>
 <body>
 {% block content %}
-     <h1>Бронирование места на: {{ event.name }}</h1>
-    <form method="post">
+     <h3 class="mt-3 ms-5">Бронирование места на: {{ event.name }}</h3>
+    <form method="post" class="ms-5 mt-3">
         {% csrf_token %}
 
         {{ form.as_p }}
         {{ booking.total_price }}
-        <button type="submit">Забронировать</button>
+        <button type="submit" class="btn btn-dark">Забронировать</button>
     </form>
     {% if number_of_people %}
         <p>Number of people: {{ number_of_people }}</p>

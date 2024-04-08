@@ -54,8 +54,7 @@ class Booking(models.Model):
         self.total_price = self.event.price * self.number_of_people
         super(Booking, self).save(*args, **kwargs)
 
-    def __str__(self):
-        return f'{self.user.name} - {self.event.name}'
+
 
 class Comment(models.Model):
     event = models.ForeignKey(Events, on_delete=models.CASCADE)

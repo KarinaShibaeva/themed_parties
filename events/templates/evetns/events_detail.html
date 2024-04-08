@@ -6,6 +6,36 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    .comment-form {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.comment{
+    width: 100%;
+}
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+</style>
 <body>
 {% block content %}
 <div class="course-detail d-flex flex-column align-items-center">
@@ -38,9 +68,9 @@
         </div>
     {% endfor %}
     {% if user.is_authenticated %}
-        <form method="post">
+        <form class="comment-form mt-3" method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
+            <textarea name="comment" class="w-100" placeholder="Оставить комментарий"></textarea>
             <button type="submit" class="btn btn-dark">Отправить</button>
         </form>
     {% else %}

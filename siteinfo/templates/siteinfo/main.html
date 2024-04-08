@@ -10,10 +10,18 @@
 <body>
 {% block content %}
 <div class="main-block1 d-flex flex-column align-items-center justify-content-center">
-        <h1 class="main-block1-title text-light">ThemePartyCentral</h1>
-        <p class="main-block1-text text-light">Создаем уникальные мероприятия вместе с вами</p>
-        <a href="{% url 'events:events' %}"><button class="btn main-block1-btn">Мероприятия</button></a>
-    </div>
+    <h1 class="main-block1-title text-light">ThemePartyCentral</h1>
+    <p class="main-block1-text text-light">Создаем уникальные мероприятия вместе с вами</p>
+    <a href="{% url 'events:events' %}"><button class="btn main-block1-btn">Мероприятия</button></a>
+</div>
+<div class="d-flex flex-column align-items-center">
+    <h1 class="text-center mt-5">О нас</h1>
+    <p class="text-center w-75 mt-1">Наш сайт предлагает широкий выбор тематических вечеринок для любого вкуса и возраста. Вы можете выбрать вечеринку в стиле 80-х, карнавал, маскарад, пляжную вечеринку или даже вечеринку в стиле Гэтсби. Мы сотрудничаем с лучшими организаторами тематических мероприятий, чтобы гарантировать вам незабываемые впечатления.
+
+На нашем сайте вы можете просмотреть подробное описание каждой тематической вечеринки, узнать расписание и место проведения, а также забронировать билеты онлайн. Мы также предлагаем услуги персонального организатора, который поможет вам подобрать идеальное мероприятие для вашего праздника или корпоратива.
+
+Проведите незабываемую вечеринку вместе с нами и окунитесь в увлекательный мир тематических вечеринок!</p>
+</div>
 {% endblock %}
 </body>
 </html>
