@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.shortcuts import render, redirect, get_object_or_404
 
+from events.forms import ProfileForm
 from events.models import Booking
 from .forms import UserRegistrationForm
 from .models import CustomUser, UserProfile
@@ -48,6 +49,20 @@ def login_user(request):
             # Обработка ошибки, например, неверные учетные данные
             return render(request, 'register/login.html', {'error_message': 'Неправильный логин или пароль'})
     return render(request, 'register/login.html')
+
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            return redirect('register:profile')
+    else:
+        form = ProfileForm()
+
+    return render(request, 'register/edit_profile.html', {'form': form})
 
 @login_required
 def profile(request):

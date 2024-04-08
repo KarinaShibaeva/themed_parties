@@ -33,10 +33,18 @@ class Events(models.Model):
 
 
 class Booking(models.Model):
+    STATUS_CHOICE = (
+        ("a", "В обработке"),
+        ("b", "Выполнено"),
+        ("c", "Отклонено")
+    )
+
     event = models.ForeignKey(Events, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     number_of_people = models.IntegerField(verbose_name='Количество человек')
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=100, verbose_name='Статус', default='В обработке', choices=STATUS_CHOICE)
+
 
     class Meta:
         verbose_name = 'Бронирование'

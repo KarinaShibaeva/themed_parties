@@ -21,6 +21,7 @@ class CustomUser(AbstractUser):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to='%Y/%m/%d', default='media/profile.png')
 
 
 
