@@ -1,4 +1,7 @@
+from django.core.mail import send_mail
 from django.db import models
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
 
 from register.models import CustomUser
 
@@ -34,9 +37,9 @@ class Events(models.Model):
 
 class Booking(models.Model):
     STATUS_CHOICE = (
-        ("a", "В обработке"),
-        ("b", "Выполнено"),
-        ("c", "Отклонено")
+        ("В обработке", "В обработке"),
+        ("Выполнено", "Выполнено"),
+        ("Отклонено", "Отклонено")
     )
 
     event = models.ForeignKey(Events, on_delete=models.CASCADE)
@@ -54,7 +57,20 @@ class Booking(models.Model):
         self.total_price = self.event.price * self.number_of_people
         super(Booking, self).save(*args, **kwargs)
 
+@receiver(pre_save, sender=Booking)
+def save_reservation_status(sender, instance, **kwargs):
+    if instance.pk:
+        db_instance = Booking.objects.get(pk=instance.pk)
+        instance._old_status = db_instance.status
+    else:
+        instance._old_status = instance.status
 
+@receiver(post_save, sender=Booking)
+def send_notification(sender, instance, created, **kwargs):
+    if created or instance.status != instance._old_status:
+        subject = 'Изменение статуса бронирования'
+        message = f'Статус бронирования был изменен на {instance.status}.'
+        send_mail(subject, message, 'allevents.com', [instance.user.email])
 
 class Comment(models.Model):
     event = models.ForeignKey(Events, on_delete=models.CASCADE)

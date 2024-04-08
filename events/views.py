@@ -27,8 +27,6 @@ def event_id_view(request, pk):
     return render(request, 'evetns/events_detail.html', {'pk': event, 'comments': comments, 'form': form})
 
 
-
-
 def book_event(request, pk):
     event = Events.objects.get(pk=pk)
     if request.method == 'POST':
